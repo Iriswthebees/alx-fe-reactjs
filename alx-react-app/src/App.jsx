@@ -16,7 +16,7 @@ function App() {
   return (
     <><WelcomeMessage />
       <Header /><MainContent /><Footer />
-      <UserProfile name="" age="" bio="" />
+      <UserProfile name="Alice" age="25" bio="Loves hiking and photography" />
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
