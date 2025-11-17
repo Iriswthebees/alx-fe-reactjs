@@ -1,9 +1,9 @@
 const UserProfile = (props) => {
     return (
         <div style={{ 
-            border: '1px solid #ddd',
-             padding: '16px',
-             margin: '16px',
+            border: '1px blue',
+             padding: '10px',
+             margin: '10px',
              borderRadius: '8px',
              maxWidth: '600px',
              backgroundColor: 'white',

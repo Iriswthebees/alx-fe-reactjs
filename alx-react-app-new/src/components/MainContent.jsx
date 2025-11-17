@@ -1,7 +1,7 @@
 function MainContent() {
     return (
         <div>
-            <main style={{ padding: '24px', backgroundColor: '#f7fafc', minHeight: '60vh' }}>
+            <main style={{ padding: '24px', backgroundColor: 'white', minHeight: '60vh' }}>
                 <section style={{ maxWidth: '900px', margin: '0 auto' }}>
                     <article style={{ background: 'white', padding: '20px', borderRadius: '10px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
                         <h3 style={{color: 'black', marginTop: 0 }}>Places to Visit</h3>
