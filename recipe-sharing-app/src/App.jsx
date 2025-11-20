@@ -3,6 +3,9 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+
 import AddRecipeForm from './components/AddRecipeForm'
 import RecipeList from './components/RecipeList'
 
@@ -34,19 +37,24 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div>
+              <AddRecipeForm />
+              <RecipeList />
+            </div>
+          }
+        />
 
-      {/* ----------------------------- */}
-      {/* Integrated Recipe App Section */}
-      {/* ----------------------------- */}
-
-      <hr style={{ margin: '32px 0' }} />
-
-      <h2>Recipe Sharing App</h2>
-
-      <AddRecipeForm />
-      <RecipeList />
+        {/* Example dynamic route for recipe details */}
+        <Route path="/recipe/:id" element={<RecipeDetails />} />
+      </Routes>
+    </Router>
     </>
-  )
+  );
 }
 
 export default App
