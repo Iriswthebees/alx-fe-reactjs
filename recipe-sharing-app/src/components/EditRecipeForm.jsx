@@ -9,7 +9,7 @@ export default function EditRecipeForm({ recipe, onClose }) {
   const [description, setDescription] = useState(recipe.description);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    event.preventDefault();
     if (!title.trim() || !description.trim()) return;
 
     updateRecipe(recipe.id, {
