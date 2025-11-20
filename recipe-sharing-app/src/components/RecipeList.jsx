@@ -1,5 +1,5 @@
 // src/components/RecipeList.jsx
-import useRecipeStore from './useRecipeStore'
+import useRecipeStore from './recipeStore'
 
 export default function RecipeList() {
   const recipes = useRecipeStore((state) => state.recipes)
