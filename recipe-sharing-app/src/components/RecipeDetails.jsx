@@ -1,6 +1,6 @@
 // src/components/RecipeDetails.jsx
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import useRecipeStore from '../store/useRecipeStore'
+import useRecipeStore from './recipeStore'
 import DeleteRecipeButton from './deleteRecipe'
 
 export default function RecipeDetails() {

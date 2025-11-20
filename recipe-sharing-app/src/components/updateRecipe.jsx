@@ -1,69 +1,60 @@
-// src/components/EditRecipeForm.jsx
-import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import useRecipeStore from '../store/useRecipeStore'
+// src/components/updateRecipe.jsx
+import { useState } from "react";
+import { useRecipeStore } from "./recipeStore";
 
-export default function EditRecipeForm() {
-  const { id } = useParams()
-  const navigate = useNavigate()
+export default function EditRecipeForm({ recipe, onClose }) {
+  const updateRecipe = useRecipeStore((state) => state.updateRecipe);
 
-  const recipe = useRecipeStore((s) => s.recipes.find((r) => String(r.id) === String(id)))
-  const updateRecipe = useRecipeStore((s) => s.updateRecipe)
-
-  // local form state
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-
-  useEffect(() => {
-    if (recipe) {
-      setTitle(recipe.title)
-      setDescription(recipe.description)
-    }
-  }, [recipe])
-
-  if (!recipe) {
-    return (
-      <div>
-        <h2>Recipe not found</h2>
-        <button onClick={() => navigate(-1)}>Go back</button>
-      </div>
-    )
-  }
+  const [title, setTitle] = useState(recipe.title);
+  const [description, setDescription] = useState(recipe.description);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    // simple validation
-    if (!title.trim() || !description.trim()) return
+    e.preventDefault();
+    if (!title.trim() || !description.trim()) return;
 
-    updateRecipe(recipe.id, { title: title.trim(), description: description.trim() })
-    // after update, navigate to recipe details
-    navigate(`/recipes/${recipe.id}`)
-  }
+    updateRecipe(recipe.id, {
+      title: title.trim(),
+      description: description.trim(),
+    });
+
+    onClose(); // hide form after saving
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Edit Recipe</h2>
-
-      <div style={{ marginBottom: '8px' }}>
-        <label>
-          Title
-          <br />
-          <input value={title} onChange={(e) => setTitle(e.target.value)} />
-        </label>
-      </div>
-
-      <div style={{ marginBottom: '8px' }}>
-        <label>
-          Description
-          <br />
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
-        </label>
-      </div>
-
-      <div style={{ display: 'flex', gap: '8px' }}>
-        <button type="submit">Save</button>
-        <button type="button" onClick={() => navigate(-1)}>Cancel</button>
-      </div>
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        border: "black 1px solid",
+        padding: "10px",
+        marginBottom: "12px",
+        borderRadius: "6px",
+      }}
+    >
+      <h3>Edit Recipe</h3>
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        style={{ width: "100%", padding: "6px", marginBottom: "6px" }}
+      />
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        style={{ width: "100%", padding: "6px", marginBottom: "6px" }}
+      />
+      <button
+        type="submit"
+        style={{
+          backgroundColor: "green",
+          color: "white",
+          border: "none",
+          padding: "6px 12px",
+          borderRadius: "4px",
+          cursor: "pointer",
+        }}
+      >
+        Save
+      </button>
     </form>
-  )
+  );
 }
