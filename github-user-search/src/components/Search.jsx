@@ -1,92 +1,141 @@
 import { useState } from "react";
-import { fetchUserData } from "../services/githubService";
+import { fetchUserData, fetchAdvancedUsers } from "../services/githubService";
 
 export default function Search() {
   const [username, setUsername] = useState("");
-  const [userData, setUserData] = useState(null);
+  const [location, setLocation] = useState("");
+  const [minRepos, setMinRepos] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [results, setResults] = useState([]);
 
-  const handleSubmit = async (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    setUserData(null);
+    setResults([]);
 
     try {
-      const data = await fetchUserData(username);
-      setUserData(data);
-    } catch (err) {
+      // If extra filters are empty → basic search
+      if (!location && !minRepos) {
+        const user = await fetchUserData(username);
+        setResults([user]);
+      } else {
+        // Advanced search
+        const users = await fetchAdvancedUsers({
+          username,
+          location,
+          minRepos,
+        });
+
+        if (users.length === 0) {
+          setError("Looks like we cant find the user");
+        } else {
+          setResults(users);
+        }
+      }
+    } catch {
       setError("Looks like we cant find the user");
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   return (
-    <div style={{ maxWidth: "500px", margin: "20px auto", textAlign: "center" }}>
-      <h2>GitHub User Search</h2>
+    <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow rounded-lg">
+      <h1 className="text-2xl font-bold mb-4 text-center">
+        GitHub User Search
+      </h1>
 
-      <form onSubmit={handleSubmit}>
+      {/* Form */}
+      <form onSubmit={handleSearch} className="space-y-4">
         <input
           type="text"
-          placeholder="Enter GitHub username"
+          placeholder="Search username..."
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          style={{
-            padding: "10px",
-            width: "80%",
-            borderRadius: "6px",
-            border: "1px solid #ccc",
-            marginBottom: "10px",
-          }}
+          required
+          className="w-full border p-2 rounded"
         />
-        <br />
+
+        <input
+          type="text"
+          placeholder="Filter by location (optional)"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className="w-full border p-2 rounded"
+        />
+
+        <input
+          type="number"
+          placeholder="Minimum repos (optional)"
+          value={minRepos}
+          onChange={(e) => setMinRepos(e.target.value)}
+          className="w-full border p-2 rounded"
+        />
+
         <button
           type="submit"
-          style={{
-            padding: "10px 20px",
-            cursor: "pointer",
-            borderRadius: "6px",
-          }}
+          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
         >
           Search
         </button>
       </form>
 
-      {/* Loading State */}
-      {loading && <p>Loading...</p>}
-
-      {/* Error State */}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      {/* Success State */}
-      {userData && (
-        <div
-          style={{
-            marginTop: "20px",
-            padding: "20px",
-            border: "1px solid #eee",
-            borderRadius: "8px",
-          }}
-        >
-          <img
-            src={userData.avatar_url}
-            alt="avatar"
-            width="120"
-            style={{ borderRadius: "50%" }}
-          />
-          <h3>{userData.name || userData.login}</h3>
-          <a
-            href={userData.html_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "blue" }}
-          >
-            View GitHub Profile
-          </a>
-        </div>
+      {/* Loading */}
+      {loading && (
+        <p className="text-center text-gray-600 mt-4">Loading...</p>
       )}
+
+      {/* Error */}
+      {error && (
+        <p className="text-center text-red-500 font-semibold mt-4">
+          {error}
+        </p>
+      )}
+
+      {/* Results */}
+      <div className="mt-6 space-y-4">
+        {results.map((user) => (
+          <div
+            key={user.id}
+            className="flex items-center gap-4 p-4 border rounded shadow-sm"
+          >
+            <img
+              src={user.avatar_url}
+              alt="Profile"
+              className="w-16 h-16 rounded-full"
+            />
+            <div>
+              <h2 className="text-lg font-semibold">
+                {user.login || user.name}
+              </h2>
+
+              {/* Display location if available */}
+              {user.location && (
+                <p className="text-sm text-gray-600">
+                  📍 {user.location}
+                </p>
+              )}
+
+              {/* Display repos count if available */}
+              {user.public_repos !== undefined && (
+                <p className="text-sm text-gray-600">
+                  📦 Repos: {user.public_repos}
+                </p>
+              )}
+
+              <a
+                href={user.html_url}
+                target="_blank"
+                className="text-blue-600 underline text-sm"
+              >
+                View Profile →
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
