@@ -21,7 +21,10 @@ export default function UserProfile() {
         "
       />
 
-      <h1 className="sm:text-lg md:text-xl hover:text-blue-800 my-4 transition-colors duration-300">
+      <h1 className="
+            sm:text-lg md:text-xl 
+            hover:text-blue-500 my-4 
+            transition-colors duration-300">
         John Doe
       </h1>
 
