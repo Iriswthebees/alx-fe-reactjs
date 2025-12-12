@@ -40,7 +40,6 @@ function AddRecipeForm() {
 
     alert("Recipe submitted! (Check console)");
 
-    // Clear fields
     setTitle("");
     setIngredients("");
     setSteps("");
@@ -48,8 +47,8 @@ function AddRecipeForm() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-lg mt-6">
-      <h2 className="text-2xl font-bold mb-4 text-center">Add New Recipe</h2>
+<div className="sm:max-w-2xl md:max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg mt-6">
+    <h2 className="text-2xl font-bold mb-4 text-center">Add New Recipe</h2>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
@@ -107,4 +106,5 @@ function AddRecipeForm() {
     </div>
   );
 }
+
 export default AddRecipeForm;
