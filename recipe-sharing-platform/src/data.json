@@ -3,18 +3,62 @@
     "id": 1,
     "title": "Spaghetti Carbonara",
     "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
-    "image": "/images/spaghettiC.jpeg"
+    "image": "/images/spaghettiC.jpeg",
+    "ingredients": [
+      "200g spaghetti",
+      "100g bacon",
+      "2 eggs",
+      "50g parmesan cheese",
+      "Black pepper"
+    ],
+    "instructions": [
+      "Boil the spaghetti until al dente.",
+      "Fry the bacon until crispy.",
+      "Whisk eggs and cheese together.",
+      "Combine pasta, bacon, and egg mixture.",
+      "Season with black pepper and serve."
+    ]
   },
   {
     "id": 2,
     "title": "Chicken Tikka Masala",
-    "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
-    "image": "/images/chickenTikka.jpeg"
+    "summary": "Chunks of grilled chicken cooked in a creamy tomato-based gravy.",
+    "image": "/images/chickenTikka.jpeg",
+    "ingredients": [
+      "500g chicken",
+      "1 cup yogurt",
+      "Tomato puree",
+      "Garlic & ginger paste",
+      "Spices (tikka masala, chili, garam masala)",
+      "Cream"
+    ],
+    "instructions": [
+      "Marinate chicken in yogurt and spices.",
+      "Grill until lightly charred.",
+      "Prepare masala sauce in a pan.",
+      "Add chicken to sauce and simmer.",
+      "Finish with cream and serve."
+    ]
   },
   {
     "id": 3,
     "title": "Beef Stir Fry",
     "summary": "Quick and flavorful beef cooked with mixed vegetables and soy sauce.",
-    "image": "/images/beefry.jpeg"
+    "image": "/images/beefry.jpeg",
+    "ingredients": [
+      "300g beef strips",
+      "Bell peppers",
+      "Onions",
+      "Soy sauce",
+      "Garlic",
+      "Vegetable oil"
+    ],
+    "instructions": [
+      "Heat oil in a wok.",
+      "Stir fry beef until browned.",
+      "Add vegetables and cook.",
+      "Pour in soy sauce and mix well.",
+      "Serve hot."
+    ]
   }
 ]
