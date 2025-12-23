@@ -5,10 +5,10 @@ function RegistrationForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState("");
 
-  // Mock API call
+  // Mock API
   const mockRegisterAPI = () => {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -19,11 +19,25 @@ function RegistrationForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setErrors({});
     setSuccess("");
 
-    if (!username || !email || !password) {
-      setError("All fields are required.");
+    let newErrors = {};
+
+    if (!username) {
+      newErrors.username = "Username is required";
+    }
+
+    if (!email) {
+      newErrors.email = "Email is required";
+    }
+
+    if (!password) {
+      newErrors.password = "Password is required";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
@@ -34,7 +48,7 @@ function RegistrationForm() {
       setEmail("");
       setPassword("");
     } catch (err) {
-      setError("Registration failed.");
+      setErrors({ api: "Registration failed" });
     }
   };
 
@@ -50,6 +64,7 @@ function RegistrationForm() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
         </div>
 
         <div>
@@ -59,6 +74,7 @@ function RegistrationForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
         </div>
 
         <div>
@@ -68,13 +84,14 @@ function RegistrationForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
         </div>
 
         <button type="submit">Register</button>
       </form>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
       {success && <p style={{ color: "green" }}>{success}</p>}
+      {errors.api && <p style={{ color: "red" }}>{errors.api}</p>}
     </div>
   );
 }
